@@ -30,13 +30,13 @@ def get_pred_junctions(convex_map, concave_map, joff_map):
 
     concave_pred_nms = non_maximum_suppression(concave_map)
 
-    topK = min(600, int((concave_pred_nms>0.008).float().sum().item()))
+    topK = max(300, int((concave_pred_nms>0.008).float().sum().item()))
 
     juncs_concave, _ = get_junctions(concave_pred_nms, joff_map, topk=topK)
 
 
     convex_pred_nms = non_maximum_suppression(convex_map)
-    topK = min(600, int((convex_pred_nms > 0.008).float().sum().item()))
+    topK = max(300, int((convex_pred_nms > 0.008).float().sum().item()))
     juncs_convex, _ = get_junctions(convex_pred_nms, joff_map, topk=topK)
 
     juncs_pred = torch.cat((juncs_concave, juncs_convex), 0)
